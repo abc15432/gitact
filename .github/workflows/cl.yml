@@ -1,0 +1,45 @@
+# Arquivo: .github/workflows/ci.yml
+# Coloque este arquivo na pasta .github/workflows/ do seu repositório.
+# Dica: o GitHub detecta e executa automaticamente qualquer .yml dessa pasta.
+
+# Nome que aparece na aba "Actions" do repositório
+name: CI - Exemplo Simples
+
+# Quando o workflow roda (gatilhos)
+on:
+  push:
+    branches: [ main ]        # roda a cada push na branch main
+  pull_request:
+    branches: [ main ]        # roda a cada pull request aberto para a main
+  workflow_dispatch:          # permite rodar manualmente pelo botão "Run workflow"
+
+# Conjunto de jobs (tarefas). Jobs rodam em paralelo por padrão.
+jobs:
+  build-e-teste:
+    # Máquina virtual onde o job executa (ubuntu, windows ou macos)
+    runs-on: ubuntu-latest
+
+    # Passos executados em sequência dentro do job
+    steps:
+      # 1) Baixa o código do repositório para a máquina virtual
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      # 2) Instala o Node.js na versão desejada (troque por Python, Java etc. se precisar)
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm           # guarda as dependências em cache para acelerar
+
+      # 3) Instala as dependências do projeto (usa o package-lock.json)
+      - name: Instalar dependências
+        run: npm ci
+
+      # 4) Executa os testes automatizados (script "test" do package.json)
+      - name: Rodar testes
+        run: npm test
+
+      # 5) Exemplo de comando simples de shell, só para visualizar no log
+      - name: Mensagem final
+        run: echo "Pipeline executado com sucesso! 🚀"
