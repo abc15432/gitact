@@ -1,6 +1,6 @@
 const soma = (a, b) => a + b;
 
-if (soma(2, 3) !== 5) {
+if (soma(2, 3) !== 6) {
   console.error("Falhou!");
   process.exit(1);
 } 
