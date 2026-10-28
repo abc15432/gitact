@@ -9,5 +9,5 @@ if(2*3 !==6 ){
   process.exit(1);
 }
 else {
-  console.log("Teste passou!");
+  console.log("Teste passou! Ensaio 1");
 }
